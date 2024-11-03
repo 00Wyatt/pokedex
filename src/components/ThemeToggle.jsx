@@ -49,7 +49,7 @@ export default function ThemeToggle() {
 
     return (
         <span
-            className="material-symbols-outlined cursor-pointer select-none duration-200 hover:text-blue-600"
+            className="material-symbols-outlined cursor-pointer select-none duration-200 hover:text-blue-500"
             onClick={() => toggleTheme()}
         >
             {themeIcons[theme]}

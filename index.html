@@ -1,26 +1,28 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<link rel="icon" type="image/svg+xml" href="/vite.svg" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Pokédex</title>
-		<script>
-			// Set theme on page load
-			document.documentElement.classList.toggle(
-				"dark",
-				localStorage.theme === "dark" ||
-					((!("theme" in localStorage) || localStorage.theme === "system") &&
-						window.matchMedia("(prefers-color-scheme: dark)").matches)
-			);
-		</script>
-		<link
-			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=contrast,dark_mode,light_mode&display=block"
-			rel="stylesheet"
-		/>
-	</head>
-	<body class="bg-white dark:bg-slate-800 dark:text-white">
-		<div id="root" class="container mx-auto"></div>
-		<script type="module" src="/src/main.jsx"></script>
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pokédex</title>
+        <script>
+            // Set theme on page load
+            document.documentElement.classList.toggle(
+                "dark",
+                localStorage.theme === "dark" ||
+                    ((!("theme" in localStorage) ||
+                        localStorage.theme === "system") &&
+                        window.matchMedia("(prefers-color-scheme: dark)")
+                            .matches),
+            );
+        </script>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined&icon_names=contrast,dark_mode,light_mode&display=block"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="bg-white dark:bg-slate-800 dark:text-white">
+        <div id="root" class="container mx-auto px-5 lg:px-12"></div>
+        <script type="module" src="/src/main.jsx"></script>
+    </body>
 </html>
