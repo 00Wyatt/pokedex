@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getFullPokedexNumber, pokemonList } from "../utils";
 
-export default function SideNav({}) {
+export default function SideNav({ selectedPokemon, setSelectedPokemon }) {
     const [searchValue, setSearchValue] = useState("");
 
     return (
@@ -18,12 +18,23 @@ export default function SideNav({}) {
             </div>
             <div className="w-full overflow-auto pr-2">
                 {pokemonList.map((pokemon, pokemonIndex) => {
+                    const truePokedexNumber = pokemonList.indexOf(pokemon);
                     return (
                         <button
-                            className="flex w-full gap-2 rounded p-2 leading-none hover:bg-slate-100 dark:hover:bg-slate-700"
+                            onClick={() => {
+                                setSelectedPokemon(truePokedexNumber);
+                            }}
+                            className={
+                                "flex w-full gap-2 rounded p-2 leading-none hover:bg-slate-100 dark:hover:bg-slate-700" +
+                                (pokemonIndex === selectedPokemon
+                                    ? " bg-slate-100 dark:bg-slate-700"
+                                    : "")
+                            }
                             key={pokemonIndex}
                         >
-                            <span>{getFullPokedexNumber(pokemonIndex)}</span>
+                            <span>
+                                {getFullPokedexNumber(truePokedexNumber)}
+                            </span>
                             <span>{pokemon}</span>
                         </button>
                     );
