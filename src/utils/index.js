@@ -14,10 +14,6 @@ export async function fetchData(url) {
     }
 }
 
-export const capitalise = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 export function getPokedexNumber(index) {
     return index + 1;
 }

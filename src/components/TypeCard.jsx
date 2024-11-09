@@ -1,4 +1,4 @@
-import { capitalise, pokemonTypeColors } from "../utils";
+import { pokemonTypeColors } from "../utils";
 
 export default function TypeCard({ type }) {
     return (
@@ -9,7 +9,7 @@ export default function TypeCard({ type }) {
                 background: pokemonTypeColors?.[type].background,
             }}
         >
-            <p className="font-bold">{capitalise(type)}</p>
+            <p className="font-bold capitalize">{type}</p>
         </div>
     );
 }

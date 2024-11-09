@@ -9,14 +9,12 @@ export default function App() {
     return (
         <>
             <Header />
-            <main className="flex gap-16">
+            <main className="flex max-h-[calc(100vh-104px)] gap-6 lg:gap-16">
                 <SideNav
                     selectedPokemon={selectedPokemon}
                     setSelectedPokemon={setSelectedPokemon}
                 />
-                <div className="flex justify-center">
-                    <PokeCard selectedPokemon={selectedPokemon} />
-                </div>
+                <PokeCard selectedPokemon={selectedPokemon} />
             </main>
         </>
     );
