@@ -31,7 +31,7 @@ export default function PokeCard({ selectedPokemon }) {
 
         setLoadingSkill(true);
         const moveData = await fetchData(moveUrl);
-        console.log("Fetched move from API", moveData);
+        console.log("Fetched move from API");
 
         const description = moveData?.flavor_text_entries.filter((val) => {
             return (
@@ -63,7 +63,6 @@ export default function PokeCard({ selectedPokemon }) {
         if (selectedPokemon in cache) {
             setData(cache[selectedPokemon]);
             console.log("Found pokemon in cache");
-            console.log(data);
             return;
         }
 
@@ -197,7 +196,7 @@ export default function PokeCard({ selectedPokemon }) {
                             return (
                                 <p
                                     key={statIndex}
-                                    className="rounded-md bg-slate-100 px-6 py-2 text-center text-lg sm:p-2 dark:bg-slate-700"
+                                    className="rounded-md bg-slate-100 px-10 py-2 text-center text-lg sm:p-2 dark:bg-slate-700"
                                 >
                                     <span className="mr-1 font-medium capitalize">
                                         {stat?.name.replaceAll("-", " ")}:
