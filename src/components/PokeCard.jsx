@@ -35,8 +35,7 @@ export default function PokeCard({ selectedPokemon }) {
 
         const description = moveData?.flavor_text_entries.filter((val) => {
             return (
-                val.language.name === "en" &&
-                val.version_group.name === "sword-shield"
+                val.language.name === "en" && val.version_group.name === "x-y"
             );
         })[0]?.flavor_text;
 
@@ -95,7 +94,7 @@ export default function PokeCard({ selectedPokemon }) {
     }
 
     return (
-        <div className="max-h flex flex-col gap-10 overflow-auto pr-6 lg:flex-row lg:pr-0">
+        <div className="max-h mb-4 flex flex-col gap-10 overflow-auto sm:mb-0 sm:pr-6 lg:flex-row lg:pr-0">
             {skill && (
                 <Modal
                     handleCloseModal={() => {
@@ -116,13 +115,13 @@ export default function PokeCard({ selectedPokemon }) {
                         </div>
                         <div className="mb-6">
                             <p className="mb-1">Name:</p>
-                            <p className="text-xl font-medium capitalize">
+                            <p className="font-medium capitalize sm:text-xl">
                                 {skill.name.replaceAll("-", " ")}
                             </p>
                         </div>
                         <div className="">
                             <p className="mb-1">Description:</p>
-                            <p className="text-xl font-medium">
+                            <p className="font-medium sm:text-xl">
                                 {skill.description}
                             </p>
                         </div>
@@ -130,23 +129,23 @@ export default function PokeCard({ selectedPokemon }) {
                 </Modal>
             )}
             <div className="flex flex-col gap-6 lg:w-2/3">
-                <div className="flex justify-center pb-4">
+                <div className="flex justify-center sm:pb-4">
                     <img
-                        className="max-w-80"
+                        className="max-w-64 sm:max-w-80"
                         src={
                             sprites?.other?.["official-artwork"]?.front_default
                         }
                         alt={`${name} artwork`}
                     />
                 </div>
-                <div className="flex items-end justify-center gap-2">
+                <div className="flex flex-wrap items-end justify-center gap-x-2 gap-y-4 sm:gap-2">
                     <span className="text-2xl">
                         #{getFullPokedexNumber(selectedPokemon)}
                     </span>
-                    <h2 className="mr-2 text-3xl font-medium capitalize">
+                    <h2 className="text-3xl font-medium capitalize sm:mr-2">
                         {name}
                     </h2>
-                    <div className="flex gap-1">
+                    <div className="flex w-full justify-center gap-1 sm:w-fit">
                         {types.map((typeObj, typeIndex) => {
                             return (
                                 <TypeCard
@@ -192,13 +191,13 @@ export default function PokeCard({ selectedPokemon }) {
                     <h3 className="mb-2 text-center text-2xl font-bold">
                         Stats
                     </h3>
-                    <div className="grid grid-cols-2 justify-center gap-2">
+                    <div className="grid justify-center gap-2 sm:grid-cols-2">
                         {stats.map((statObj, statIndex) => {
                             const { stat, base_stat } = statObj;
                             return (
                                 <p
                                     key={statIndex}
-                                    className="rounded-md bg-slate-100 p-2 text-center text-lg dark:bg-slate-700"
+                                    className="rounded-md bg-slate-100 px-6 py-2 text-center text-lg sm:p-2 dark:bg-slate-700"
                                 >
                                     <span className="mr-1 font-medium capitalize">
                                         {stat?.name.replaceAll("-", " ")}:
@@ -211,12 +210,14 @@ export default function PokeCard({ selectedPokemon }) {
                 </div>
             </div>
             <div className="flex flex-col lg:w-1/3">
-                <h3 className="mb-3 text-2xl font-bold">Moves</h3>
-                <div className="flex flex-wrap gap-2 overflow-auto pr-2">
+                <h3 className="mb-3 text-center text-2xl font-bold sm:text-start">
+                    Moves
+                </h3>
+                <div className="flex flex-wrap justify-center gap-2 overflow-auto sm:justify-start lg:pr-2">
                     {moves.map((moveObj, moveIndex) => {
                         return (
                             <button
-                                className="rounded bg-slate-100 px-2 py-1 capitalize dark:bg-slate-700"
+                                className="rounded bg-slate-100 px-2 py-1 capitalize duration-200 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600"
                                 key={moveIndex}
                                 onClick={() => {
                                     fetchMoveData(

@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { getFullPokedexNumber, pokemonList } from "../utils";
 
-export default function SideNav({ selectedPokemon, setSelectedPokemon }) {
+export default function SideNav({
+    selectedPokemon,
+    setSelectedPokemon,
+    showSideMenu,
+    handleCloseMenu,
+}) {
     const [searchValue, setSearchValue] = useState("");
 
     const filteredPokemon = pokemonList.filter((item, itemIndex) => {
@@ -12,10 +17,17 @@ export default function SideNav({ selectedPokemon, setSelectedPokemon }) {
     });
 
     return (
-        <nav className="sticky flex w-fit flex-col items-start gap-2">
-            <div className="mb-2">
+        <nav
+            className={
+                "flex-col items-start gap-2 sm:sticky sm:flex sm:w-fit" +
+                (showSideMenu
+                    ? " fixed left-0 flex h-[calc(100vh-100px)] w-full bg-white px-4 dark:bg-slate-800"
+                    : " hidden")
+            }
+        >
+            <div className="mb-2 w-full">
                 <input
-                    className="border-b-2 bg-slate-100 p-2 outline-0 focus:border-blue-500 dark:bg-slate-700"
+                    className="w-full border-b-2 bg-slate-100 p-2 outline-0 focus:border-blue-500 sm:w-auto dark:bg-slate-700"
                     placeholder="E.g. 001 or Bulba..."
                     value={searchValue}
                     onChange={(e) => {
@@ -30,6 +42,7 @@ export default function SideNav({ selectedPokemon, setSelectedPokemon }) {
                         <button
                             onClick={() => {
                                 setSelectedPokemon(truePokedexNumber);
+                                handleCloseMenu();
                             }}
                             className={
                                 "flex w-full gap-2 rounded p-2 leading-none duration-200 hover:bg-slate-100 dark:hover:bg-slate-700" +
