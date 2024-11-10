@@ -1,13 +1,56 @@
 import { useEffect, useState } from "react";
 import TypeCard from "./TypeCard";
+import Modal from "./Modal";
 import { fetchData, getFullPokedexNumber, getPokedexNumber } from "../utils";
 
 export default function PokeCard({ selectedPokemon }) {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [skill, setSkill] = useState(null);
+    const [loadingSkill, setLoadingSkill] = useState(false);
 
     const { name, weight, height, abilities, stats, types, moves, sprites } =
         data || {};
+
+    async function fetchMoveData(move, moveUrl) {
+        if (loadingSkill || !localStorage || !moveUrl) {
+            return;
+        }
+
+        let cache = {};
+
+        if (localStorage.getItem("pokemon-moves")) {
+            cache = JSON.parse(localStorage.getItem("pokemon-moves"));
+        }
+
+        if (move in cache) {
+            setSkill(cache[move]);
+            console.log("Found move in cache");
+            return;
+        }
+
+        setLoadingSkill(true);
+        const moveData = await fetchData(moveUrl);
+        console.log("Fetched move from API", moveData);
+
+        const description = moveData?.flavor_text_entries.filter((val) => {
+            return (
+                val.language.name === "en" &&
+                val.version_group.name === "sword-shield"
+            );
+        })[0]?.flavor_text;
+
+        const skillData = {
+            name: move,
+            description,
+        };
+
+        setSkill(skillData);
+        cache[move] = skillData;
+        localStorage.setItem("pokemon-moves", JSON.stringify(cache));
+
+        setLoadingSkill(false);
+    }
 
     useEffect(() => {
         if (loading || !localStorage) return;
@@ -53,6 +96,39 @@ export default function PokeCard({ selectedPokemon }) {
 
     return (
         <div className="max-h flex flex-col gap-10 overflow-auto pr-6 lg:flex-row lg:pr-0">
+            {skill && (
+                <Modal
+                    handleCloseModal={() => {
+                        setSkill(null);
+                    }}
+                >
+                    <div className="flex flex-col justify-center text-center text-lg">
+                        <div className="text-end">
+                            <button
+                                onClick={() => {
+                                    setSkill(null);
+                                }}
+                            >
+                                <span className="material-symbols-outlined duration-200 hover:text-slate-400">
+                                    close
+                                </span>
+                            </button>
+                        </div>
+                        <div className="mb-6">
+                            <p className="mb-1">Name:</p>
+                            <p className="text-xl font-medium capitalize">
+                                {skill.name.replaceAll("-", " ")}
+                            </p>
+                        </div>
+                        <div className="">
+                            <p className="mb-1">Description:</p>
+                            <p className="text-xl font-medium">
+                                {skill.description}
+                            </p>
+                        </div>
+                    </div>
+                </Modal>
+            )}
             <div className="flex flex-col gap-6 lg:w-2/3">
                 <div className="flex justify-center pb-4">
                     <img
@@ -142,6 +218,12 @@ export default function PokeCard({ selectedPokemon }) {
                             <button
                                 className="rounded bg-slate-100 px-2 py-1 capitalize dark:bg-slate-700"
                                 key={moveIndex}
+                                onClick={() => {
+                                    fetchMoveData(
+                                        moveObj?.move?.name,
+                                        moveObj?.move?.url,
+                                    );
+                                }}
                             >
                                 {moveObj?.move?.name.replaceAll("-", " ")}
                             </button>

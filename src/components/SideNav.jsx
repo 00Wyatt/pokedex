@@ -32,7 +32,7 @@ export default function SideNav({ selectedPokemon, setSelectedPokemon }) {
                                 setSelectedPokemon(truePokedexNumber);
                             }}
                             className={
-                                "flex w-full gap-2 rounded p-2 leading-none hover:bg-slate-100 dark:hover:bg-slate-700" +
+                                "flex w-full gap-2 rounded p-2 leading-none duration-200 hover:bg-slate-100 dark:hover:bg-slate-700" +
                                 (pokemonIndex === selectedPokemon
                                     ? " bg-slate-100 dark:bg-slate-700"
                                     : "")
